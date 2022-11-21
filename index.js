@@ -1,24 +1,18 @@
-console.log(this);
+// console.log(this);
 
 // alert(); // window.alert()
 
-console.dir(document);
+// console.dir(document);
 
-function getAlert() {
-    alert('Hello, user!');
+function getAlert(event) {
+    const btn = event.target;
+    btn.style.display = 'none';
 }
 
 const buttonElement = document.getElementById('btn');
 buttonElement.addEventListener('click', getAlert);
 
 /*
-Зробіть кнопку, додайте їй id, напишіть функцію, яка виводить в консоль "привіт"
-навісити обробку події наведення миші на цю кнопку
+Зробіть кнопку одноразовою.
+Коли натискаємо на кнопку, властивість display у кнопки повинна стати none
 */
-
-function consoleHello() {
-    console.log('Hello');
-}
-
-const secondBtn = document.getElementById('second-btn');
-secondBtn.addEventListener('mouseenter', consoleHello);
