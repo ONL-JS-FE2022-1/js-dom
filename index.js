@@ -5,14 +5,9 @@
 // console.dir(document);
 
 function getAlert(event) {
-    const btn = event.target;
-    btn.style.display = 'none';
+    console.log(event);
+    event.target.removeEventListener('click', getAlert);
 }
 
 const buttonElement = document.getElementById('btn');
 buttonElement.addEventListener('click', getAlert);
-
-/*
-Зробіть кнопку одноразовою.
-Коли натискаємо на кнопку, властивість display у кнопки повинна стати none
-*/
