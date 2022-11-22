@@ -1,32 +1,26 @@
-// console.log(this);
+const collection = document.getElementsByClassName('paragraph');
+console.log(collection);
 
-// alert(); // window.alert()
+for (const p of collection) {
+    p.style.color = 'green';
+}
 
-// console.dir(document);
+const btns = document.getElementsByTagName('button');
+console.log(btns);
 
-// function getAlert(event) {
-//     console.log(event);
-//     event.target.removeEventListener('click', getAlert);
-// }
+const arr = [...btns];
+console.log(arr);
 
-// const buttonElement = document.getElementById('btn');
-// buttonElement.addEventListener('click', (event) => {
-//     console.log(event);
-// });
+function hello() {
+    console.log('Hello, user!')
+}
 
+// variant 1
+// btns[0].addEventListener('click', hello);
+// btns[1].addEventListener('click', hello);
+// btns[2].addEventListener('click', hello);
 
-
-/*
-Напишіть функцію, яка вітає користувача за його ім'ям.
-Ім'я користувача брати з інпуту форми.
-*/
-
-const form = document.getElementById('hello-form');
-form.addEventListener('submit', helloUser)
-
-function helloUser(event) {
-    event.preventDefault();
-    const form = event.target;
-    const value = form[0].value;
-    console.log(`Hello, ${value ? value : 'Anonym'}`);
+// variant 2
+for(const btn of btns) {
+    btn.addEventListener('click', hello);
 }
