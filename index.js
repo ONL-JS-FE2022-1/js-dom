@@ -1,35 +1,25 @@
 /*
-1. Зробити верстку елементів
-2. Витягти посилання на img-елемент
-3. Написати логіку зміни адрес картинок
-4. Функції, які змінюють адресу навісити в якості обробників події на кнопки
+1. Маємо число
+2. Маємо дві кнопки: +, -
+3. За натисненням кнопки "+" число збільшується на 1
+4. За натисненням "-" число зменшується на 1
 */
 
-const imageDB = [
-    './images/7f041fc3ecd15391c19bf91c2c16ba32.jpg',
-    './images/905911947c2947e6dda5a8d9aa2af088.jpeg',
-    './images/1623669235_2.jpg',
-    './images/1640239628_1-pofoto-club-p-priroda-ptitsi-tsveti-foto-1.jpg',
-    './images/c56b2f4c9309457ee52b4278b0792bda--dandelion-wine-my-childhood.jpg'
-]
+let num = 0;
 
-const [prevBtn, nextBtn] = document.querySelectorAll('.btn');
-const img = document.querySelector('.slide-img'); // <<<=== facepalm // const img = document.querySelector('slide-img')
+const div = document.querySelector('#number');
+const [decrement, increment] = document.querySelectorAll('.btn');
 
-const slider = new Slider(imageDB);
-
-function updateView() {
-    img.setAttribute('src', slider.currentSlide);
+function updateDiv() {
+    div.innerHTML = num;
 }
 
-const createSlideBtnHandler = (direction = 'next') => {
-    return function () {
-        slider.currentIndex = slider[direction === 'next' ? 'nextSlide' : 'prevSlide'];
-        updateView();
-    }
-}
+decrement.addEventListener('click', () => {
+    num--;
+    updateDiv();
+})
 
-prevBtn.addEventListener('click', createSlideBtnHandler('prev'));
-nextBtn.addEventListener('click', createSlideBtnHandler('next'));
-
-updateView();
+increment.addEventListener('click', () => {
+    num++;
+    updateDiv();
+})
