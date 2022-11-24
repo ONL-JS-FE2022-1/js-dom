@@ -1,34 +1,29 @@
-// const event = new Event('click');
-// console.log(event);
-
-const btn = document.querySelector('button');
-const div = document.querySelector('#root');
-
-const eventHandler = (event) => {
-    if(event.currentTarget === document.body) {
-        event.stopPropagation();
-        console.log('Ніяких тобі кнопок');
-    }
-}
-// console.group();
-btn.addEventListener('click', eventHandler, () => {
-    console.log('hello, button');
-});
-// div.addEventListener('click', eventHandler, {capture: true});
-document.body.addEventListener('click', eventHandler, {capture: true});
-// window.addEventListener('click', eventHandler, {capture: true});
-console.groupEnd();
-
-// const event = new MouseEvent('click');
-// btn.dispatchEvent(event);
 
 /*
+Створіть інпут, який при втраті (подія blur) виводити в сусідньому квадрат числа, який був введений у інпут
 
-1. Фаза занурення. Подія стається на рівні OC. 
-OC передає її браузеру (Window), той передає document -> body -> .... -> елемент, на якому сталася подія
+1. Створити інпут у верстці
+2. Сторити дів у верстці
+3. Потім витягти на div та input посилання через querySelector (getElement....)
+4. На інпут повісити подію, тип події - blur, колис станеться ця подія, треба в сусідньому діві вивести квадрат числа який був введений в інпут
 
-2. Фаза цілі. Подія досягла елемента, елемент - це таргет
-
-3. Фаза сплиття. Подія починає спливати у зворотньому напрямку, тобто від елемента до браузера.
-
+Проверка на value (input - число!)
+Пам'ятайте, value в input'і завжди буде рядком (перевторити типи!)
 */
+
+const input = document.querySelector('input');
+
+function blurHandler(event) {
+    const value = event.target.value;
+    const number = Number(value);
+    const div = document.querySelector('#root');
+
+    if(Number.isNaN(number)) {
+        div.textContent = 'Input must be a number';
+        return;
+    }
+
+    div.textContent = number * number;
+}
+
+input.addEventListener('blur', blurHandler);
