@@ -1,14 +1,10 @@
-// 1. Створити новий елемент
+/*
+Створити картинку і вставити її в div
+*/
+
 const div = document.createElement('div');
-div.append('Hello, JS!');
-console.log(div);
-// 2. Приєднати елемент до будь-якого існуючого на сторінці батьківського елемента
-const body = document.body;
-console.log(body);
-body.append(div);
+const img = document.createElement('img');
+img.setAttribute('src', './images/7f041fc3ecd15391c19bf91c2c16ba32.jpg');
+div.append(img);
 
-
-//
-const div2 = document.createElement('div');
-div2.append('test');
-div.append(div2);
+document.body.append(div);
