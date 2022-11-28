@@ -1,90 +1,40 @@
-const telephone = {
-  name: "Samsung",
-  avatar: "./",
-  description: "BlaBlaBla",
-  price: "100$",
-};
-
-const telephoneArray = [
-  {
-    name: "Samsung",
-    avatar: "./",
-    description: "BlaBlaBla",
-    price: "100$",
-  },
-  {
-    name: "Nokia",
-    avatar: "./",
-    description: "BlaBlaBla",
-    price: "50$",
-  },
-  {
-    name: "Huawei",
-    avatar: "./",
-    description: "BlaBlaBla",
-    price: "200$",
-  },
-  {
-    name: "iPhone",
-    avatar: "./",
-    description: "BlaBlaBla",
-    price: "100500$",
-  },
-];
-
-// console.log(`Телефон ${telephone.name} коштує ${telephone.price}`);
-
-// for(const tel of telephoneArray) {
-//     console.log(`Телефон ${tel.name} коштує ${tel.price}`);
-// }
-
-
-// СТРУКТУРА
-
-
-/* <article class="card-wrapper">
-    <img
-        class="card-image"
-        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-        alt="John"
-    />
-    <h2 class="username">John</h2>
-    <p class="description">fafewqrewrqwer2322revzd</p>
-</article> */
-
-
-// СТРУКТУРА
-
 const root = document.querySelector('#root');
 
 function createCard(user) {
     /* TODO:
-    1. Refactor to short code
+    1+. Refactor to short code
     2. Create image placeholder
     3. When image is loadeng, show placeholder
     */
-    const article = document.createElement('article');
-    article.classList.add('card-wrapper');
 
     const img = document.createElement('img');
     img.classList.add('card-image');
     img.setAttribute('src', user.profilePicture);
     img.setAttribute('alt', user.name);
 
-    const h2 = document.createElement('h2');
-    h2.classList.add('username');
-    h2.append(user.name);
+    const h2 = createElement('h2', {classNames: ['username']}, user.name);
 
-    const p = document.createElement('p');
-    p.classList.add('description');
-    p.append(user.description);
-
-    article.append(img, h2, p);
+    const p = createElement('p', {classNames: ['description']}, user.description);
     
-    return article;
+    return createElement('article', {classNames: ['card-wrapper']}, img, h2, p);
 }
 
 const cardArray = data.map((user) => createCard(user));
 
 
 root.append(...cardArray);
+
+/**
+ * 
+ * @param {String} type - тип елемента, що треба створити
+ * @param {Object} options
+ * @param {String[]} options.classNames - список классів 
+ * @param  {...Node} children - список дочірніх вузлів
+ */
+
+function createElement(type, {classNames}, ...children) {
+  const elem = document.createElement(type);
+  elem.classList.add(...classNames);
+  elem.append(...children);
+  return elem;
+}
