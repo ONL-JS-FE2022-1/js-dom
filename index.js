@@ -1,10 +1,5 @@
-setTimeout(func, 2000);
+const intervalID = setInterval(function () {console.log('LOGGING')}, 2000);
+// 3 <== id interval
+// 30 LOGGING
+// clearInterval(intervalID)
 
-function func() {
-    console.log(2+2);
-}
-
-const helloTimeoutId = setTimeout(function () {console.log('LOGGING')}, 15000);
-clearTimeout(helloTimeoutId);
-
-// func();
