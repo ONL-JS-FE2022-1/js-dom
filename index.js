@@ -1,91 +1,69 @@
-const root = document.querySelector('#root');
+// https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}&units=metric
 
-function createCard(user) {
-    /* TODO:
-    1+. Refactor to short code
-    2+. Create image placeholder
-    3. When image is loadeng, show placeholder
-    */
+/*
 
-    const imageWrapper = createImageWrapper(user);
+Задача: зробити погодний віджет
+Алгоритм вирішення:
 
-    const h2 = createElement('h2', {classNames: ['username']}, user.name);
++1. Зробити верстку елементів, які отримують від користувача дані про місто
++2. Отримати дані і обробити їх (підготовувати до запиту на сервер)
++3. Зробити запит на сервер і отримати відповідь.
++4. Обробити дані відповіді та відобразити користувачу. 
 
-    const p = createElement('p', {classNames: ['description']}, user.description);
-    
-    return createElement('article', {classNames: ['card-wrapper']}, imageWrapper, h2, p);
+*/
+
+const API_KEY = 'f7c576ba3699bdd0b98ddcf196639992';
+const API_BASE = 'https://api.openweathermap.org/data/2.5/weather';
+
+const btn = document.querySelector('.btn');
+
+btn.addEventListener('click', buttonClickHandler);
+
+function buttonClickHandler({target}) {
+  const selectValue = target.previousElementSibling.value;
+  requestAPI(selectValue)
 }
 
-// ПРОФЕТЧИТЬ.
+function requestAPI(city) {
+  // готуємо URL
+  const url = `${API_BASE}?q=${city}&appid=${API_KEY}&units=metric`;
 
-fetch('./data.json')
+  fetch(url)
+  .then((response) => {return response.json()})
+  .then((data) => {displayWeather(data)})
+}
+
+/*
+      <article class="weather">
+        <p>City: Kyiv</p>
+        <p>Temperature: 0</p>
+        <p>Pressure: 999</p>
+        <p>Weather description: overcast clouds</p>
+      </article>
+*/
+
+function displayWeather(weatherData) {
+  const {name, main: {temp, pressure}, weather} = weatherData; // !!!!!
+
+  const article = document.createElement('article');
+
+  const city = document.createElement('p');
+  const temperature = document.createElement('p');
+  const press = document.createElement('p');
+  const descr = document.createElement('p');
+
+  city.append('City: ', name);
+  temperature.append('Temperature: ', temp);
+  press.append('Pressure: ', pressure);
+  descr.append('Weather description: ', weather[0].description);
+
+  article.append(city, temperature, press, descr);
+
+  const section = document.querySelector('.wrapper');
+  section.append(article);
+}
+
+
+fetch("https://api.monobank.ua/bank/currency")
 .then((response) => {return response.json()})
-.then((data) => {
-  const cardArray = data.map((user) => createCard(user)); 
-  root.append(...cardArray);
-})
-
-
-// ---------------------
-
-/**
- * 
- * @param {String} type - тип елемента, що треба створити
- * @param {Object} options
- * @param {String[]} options.classNames - список классів 
- * @param  {...Node} children - список дочірніх вузлів
- */
-
-function createElement(type, {classNames}, ...children) {
-  const elem = document.createElement(type);
-  elem.classList.add(...classNames);
-  elem.append(...children);
-  return elem;
-}
-
-function createImageWrapper(user) {
-  const imgWrapper = createElement('div', {classNames: ['image-wrapper']});
-  imgWrapper.setAttribute('id', `wrapper${user.id}`);
-  imgWrapper.style.backgroundColor = stringToColor(user.name);
-  const img = createUserImage(user);
-  return imgWrapper;
-}
-
-function createUserImage(user) {
-  const img = document.createElement('img');
-  img.classList.add('card-image');
-  img.setAttribute('src', user.profilePicture);
-  img.setAttribute('alt', user.name);
-  img.dataset.id = user.id;
-  
-  img.addEventListener('load', imageLoadHandler);
-  img.addEventListener('error', imageErrorHandler);
-
-  return img;
-}
-
-function imageLoadHandler({target}) {
-  console.log('image successfully loaded');
-  const parrentWrapper = document.getElementById(`wrapper${target.dataset.id}`)
-  parrentWrapper.append(target);
-}
-
-function imageErrorHandler({target}) {
-  target.remove();
-  console.log('image loading has error');
-}
-
-
-/* Utils function */
-function stringToColor(str) {
-  let hash = 0;
-  for (var i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  let colour = '#';
-  for (var i = 0; i < 3; i++) {
-    let value = (hash >> (i * 8)) & 0xFF;
-    colour += ('00' + value.toString(16)).substr(-2);
-  }
-  return colour;
-}
+.then((data) => {console.log(data)})
