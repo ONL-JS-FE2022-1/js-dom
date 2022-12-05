@@ -33,37 +33,20 @@ function requestAPI(city) {
   .then((data) => {displayWeather(data)})
 }
 
-/*
-      <article class="weather">
-        <p>City: Kyiv</p>
-        <p>Temperature: 0</p>
-        <p>Pressure: 999</p>
-        <p>Weather description: overcast clouds</p>
-      </article>
-*/
-
 function displayWeather(weatherData) {
   const {name, main: {temp, pressure}, weather} = weatherData; // !!!!!
+  const [{description}] = weather;
 
-  const article = document.createElement('article');
+  const article = document.querySelector('#weather-box');
+  article.classList.remove('weather');
 
-  const city = document.createElement('p');
-  const temperature = document.createElement('p');
-  const press = document.createElement('p');
-  const descr = document.createElement('p');
-
-  city.append('City: ', name);
-  temperature.append('Temperature: ', temp);
-  press.append('Pressure: ', pressure);
-  descr.append('Weather description: ', weather[0].description);
-
-  article.append(city, temperature, press, descr);
-
-  const section = document.querySelector('.wrapper');
-  section.append(article);
+  appendInfo('city', name);
+  appendInfo('temp', temp);
+  appendInfo('press', pressure);
+  appendInfo('descr', description);
 }
 
-
-fetch("https://api.monobank.ua/bank/currency")
-.then((response) => {return response.json()})
-.then((data) => {console.log(data)})
+function appendInfo(id, info) {
+  const element = document.querySelector(`#${id}`);
+  element.textContent = info;
+}
